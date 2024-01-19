@@ -4,9 +4,9 @@ SRCS = ./
 INCLUDE = ./
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 
-FILES = main.c utils.c
+FILES = main.c philo.c utils.c
 OBJECTS = $(addprefix $(SRCS), $(FILES:.c=.o))
 
 %.o: %.c
