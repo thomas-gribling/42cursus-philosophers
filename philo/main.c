@@ -6,25 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:21 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/19 11:17:00 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/25 09:03:59 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	check_vals(t_stats *st, int ac)
-{
-	int	state;
-
-	state = 0;
-	if (st->n_philos < 1)
-		state = 1;
-	if (st->t_die < 60 || st->t_eat < 60 || st->t_sleep < 60)
-		state = 1;
-	if (ac == 6 && st->n_eat < 0)
-		state = 1;
-	return (state);
-}
 
 int	check_args(t_stats *st, int ac, char **av)
 {
@@ -47,7 +33,7 @@ int	check_args(t_stats *st, int ac, char **av)
 		st->n_eat = ft_atol(av[5]);
 	else
 		st->n_eat = -1;
-	return (check_vals(st, ac));
+	return (0);
 }
 
 int	main(int ac, char **av)

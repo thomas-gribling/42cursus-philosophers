@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/19 10:14:13 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/25 09:18:28 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define SLEEPING 0
+# define THINKING 1
+# define EATING 2
+
 typedef struct s_philo
 {
-	pthread_t	t;
+	int				state;
+	pthread_t		t;
+	pthread_mutex_t	fork;
 }				t_philo;
 
 typedef struct s_stats

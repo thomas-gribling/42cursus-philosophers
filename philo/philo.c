@@ -6,11 +6,14 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:13:12 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/19 11:17:13 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/25 09:22:56 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+// 1/2 ou 1/3 philo prend les fourchettes et mange
+// on switch a droite
 
 void	*output_thread(void *vargp)
 {
@@ -28,7 +31,8 @@ void	create_philos(t_stats *st)
 	{
 		st->philos[i] = malloc(sizeof(t_philo));
 		pthread_create(&st->philos[i]->t, NULL, output_thread, st->philos[i]);
-		pthread_join(st->philos[i]->t, NULL); // like wait() but for threads
+		pthread_mutex_init(&st->philos[i]->fork, NULL);
+		pthread_join(st->philos[i]->t, NULL);
 	}
 	st->philos[i] = NULL;
 }
