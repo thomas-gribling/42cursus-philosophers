@@ -6,33 +6,36 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 10:13:12 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/25 09:22:56 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/27 10:43:15 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// 1/2 ou 1/3 philo prend les fourchettes et mange
-// on switch a droite
+// tous commencer par penser
+// si temps de vie < temps penser + temps manger = DEAD
 
 void	*output_thread(void *vargp)
 {
+	t_stats	*st;
+
+	st = (t_stats *)vargp;
+	st->philos[st->i]->state = THINKING;
 	printf("thread created! (%p)\n", vargp);
 	return (NULL);
 }
 
 void	create_philos(t_stats *st)
 {
-	int	i;
-
 	st->philos = malloc((st->n_philos + 1) * sizeof(t_philo *));
-	i = -1;
-	while (++i < st->n_philos)
+	st->i = -1;
+	while (++st->i < st->n_philos)
 	{
-		st->philos[i] = malloc(sizeof(t_philo));
-		pthread_create(&st->philos[i]->t, NULL, output_thread, st->philos[i]);
-		pthread_mutex_init(&st->philos[i]->fork, NULL);
-		pthread_join(st->philos[i]->t, NULL);
+		st->philos[st->i] = malloc(sizeof(t_philo));
+		st->philos[st->i]->curr_lifetime = st->t_die;
+		pthread_create(&st->philos[st->i]->t, NULL, output_thread, st);
+		pthread_mutex_init(&st->philos[st->i]->fork, NULL);
+		pthread_join(st->philos[st->i]->t, NULL);
 	}
-	st->philos[i] = NULL;
+	st->philos[st->i] = NULL;
 }
