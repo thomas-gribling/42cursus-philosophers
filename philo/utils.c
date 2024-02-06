@@ -6,11 +6,18 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/06 10:11:41 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:37:24 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	put_message(char *msg, t_philo phi)
+{
+	pthread_mutex_lock(&phi.all->write_mutex);
+	printf(msg, get_time() - phi.all->start, phi.i);
+	pthread_mutex_unlock(&phi.all->write_mutex);
+}
 
 unsigned int	get_time(void)
 {

@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/06 10:11:56 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:33:26 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define MSG_FORK "%04d %d has taken a fork\n"
+# define MSG_EAT "%04d %d is eating\n"
+# define MSG_SLEEP "%04d %d is sleeping\n"
+# define MSG_THINK "%04d %d is thinking\n"
+# define MSG_DIE "%04d %d died\n"
+
 typedef struct s_common
 {
 	long			n_philo;
@@ -28,7 +34,8 @@ typedef struct s_common
 	long			n_eat;
 	pthread_mutex_t	write_mutex;
 	unsigned int	start;
-}				t_common;
+	int				dead;
+}					t_common;
 
 typedef struct s_philo
 {
@@ -39,8 +46,10 @@ typedef struct s_philo
 	t_common		*all;
 }					t_philo;
 
+void			put_message(char *msg, t_philo phi);
 unsigned int	get_time(void);
 void			ft_usleep(long ms);
+
 long			ft_atol(char *s);
 
 #endif

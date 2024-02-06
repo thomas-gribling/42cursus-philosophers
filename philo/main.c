@@ -6,25 +6,34 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/06 09:58:40 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:35:01 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	put(char c)
+void	die(t_philo phi)
 {
-	write(1, &c, 1);
+	put_message(MSG_DIE, phi);
 }
 
 void	*routine(void *arg)
 {
-	t_philo	phi;
+	t_philo			phi;
+	//unsigned int	last_eat;
 
 	phi = *((t_philo *)arg);
-	pthread_mutex_lock(&phi.all->write_mutex);
-	printf("%04d: thread #%03d created!\n", get_time() - phi.all->start, phi.i);
-	pthread_mutex_unlock(&phi.all->write_mutex);
+	if (phi.i % 2)
+		ft_usleep(phi.all->t_eat / 10);
+	while (!phi.all->dead)
+	{
+		break;
+		// EAT
+		//last_eat = get_time();
+		// SLEEP
+		// THINK
+	}
+	die(phi);
 	return (NULL);
 }
 
@@ -34,6 +43,7 @@ void	init_philos(t_common all)
 	int		i;
 
 	phi = malloc(all.n_philo * sizeof(t_philo));
+	all.dead = 0;
 	pthread_mutex_init(&all.write_mutex, NULL);
 	i = -1;
 	while (++i < all.n_philo)
