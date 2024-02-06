@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 16:38:43 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/05 09:06:31 by tgriblin         ###   ########.fr       */
+/*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
+/*   Updated: 2024/02/06 10:11:41 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned	get_time(void)
+unsigned int	get_time(void)
 {
 	struct timeval	tv;
 
@@ -21,9 +21,13 @@ unsigned	get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	put_msg(t_stats *st, char *msg, int n)
+void	ft_usleep(long ms)
 {
-	printf(msg, get_time() - st->time_start, n);
+	unsigned int	start;
+
+	start = get_time();
+	while (get_time() - start < ms)
+		usleep(ms / 10);
 }
 
 long	ft_atol(char *s)
