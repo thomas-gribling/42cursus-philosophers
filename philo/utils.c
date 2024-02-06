@@ -6,9 +6,25 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 16:38:43 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/18 16:44:31 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/05 09:06:31 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
+
+unsigned	get_time(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (0);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	put_msg(t_stats *st, char *msg, int n)
+{
+	printf(msg, get_time() - st->time_start, n);
+}
 
 long	ft_atol(char *s)
 {

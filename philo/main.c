@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:21 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/25 09:03:59 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/05 08:37:02 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	main(int ac, char **av)
 	st = malloc(sizeof(t_stats));
 	if (check_args(st, ac, av))
 		return (free(st), 1);
-	printf("Philosophers: %li\n", st->n_philos);
+	/*printf("Philosophers: %li\n", st->n_philos);
 	printf("Time to die: %li\n", st->t_die);
 	printf("Time to eat: %li\n", st->t_eat);
 	printf("Time to sleep: %li\n", st->t_sleep);
-	printf("Number of eat needed: %li\n", st->n_eat);
+	printf("Number of eat needed: %li\n", st->n_eat);*/
 	create_philos(st);
 	return (free(st), 0);
 }
