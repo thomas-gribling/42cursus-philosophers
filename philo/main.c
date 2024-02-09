@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 10:00:53 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:17:36 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	die(t_philo *phi)
 
 void	*check_death(void *arg)
 {
-	t_philo *phi;
+	t_philo	*phi;
 
 	phi = (t_philo *)arg;
 	while (!phi->all->dead)
@@ -43,19 +43,13 @@ void	*routine(void *arg)
 	pthread_create(&death_check, NULL, check_death, phi);
 	while (!phi->all->dead)
 	{
-		pthread_mutex_lock(phi->rf);
-		put_message(MSG_FORK, phi);
-		pthread_mutex_lock(&phi->lf);
-		put_message(MSG_FORK, phi);
-		put_message(MSG_EAT, phi);
-		phi->eating = 1;
+		philo_start_eating(phi);
 		ft_usleep(phi->all->t_eat);
 		phi->last_eat = get_time();
-		phi->eating = 0;
-		pthread_mutex_unlock(&phi->lf);
-		pthread_mutex_unlock(phi->rf);
-		put_message(MSG_SLEEP, phi);
+		philo_start_sleeping(phi);
 		ft_usleep(phi->all->t_sleep);
+		if (phi->all->dead)
+			return (NULL);
 		put_message(MSG_THINK, phi);
 	}
 	return (NULL);
