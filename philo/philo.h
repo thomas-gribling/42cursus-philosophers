@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 09:46:00 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/09 09:57:55 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ unsigned int	get_time(void);
 void			ft_usleep(long ms);
 
 long			ft_atol(char *s);
+int				ft_strcmp(char *s1, char *s2);
 
 #endif

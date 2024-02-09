@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 09:45:06 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/09 09:58:38 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	put_message(char *msg, t_philo *phi)
 {
-	if (phi->all->dead)
+	if (phi->all->dead && ft_strcmp(msg, MSG_DIE))
 		return ;
 	pthread_mutex_lock(&phi->all->write_mutex);
 	printf(msg, get_time() - phi->all->start, phi->i);
@@ -65,4 +65,14 @@ long	ft_atol(char *s)
 		i++;
 	}
 	return (sign * out);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

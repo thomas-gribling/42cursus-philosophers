@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 09:49:16 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:00:53 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	die(t_philo *phi)
 {
-	put_message(MSG_DIE, phi);
+	pthread_mutex_lock(&phi->all->death_mutex);
 	phi->all->dead = 1;
+	put_message(MSG_DIE, phi);
+	pthread_mutex_unlock(&phi->all->death_mutex);
 }
 
 void	*check_death(void *arg)
@@ -24,7 +26,7 @@ void	*check_death(void *arg)
 
 	phi = (t_philo *)arg;
 	while (!phi->all->dead)
-		while (!phi->eating)
+		if (!phi->eating)
 			if (get_time() - phi->last_eat >= phi->all->t_die)
 				die(phi);
 	return (NULL);
@@ -59,46 +61,38 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-void	set_philo(t_philo *phi, t_common *all, int i)
-{
-	phi->all = all;
-	phi->i = i;
-	phi->eating = 0;
-	pthread_mutex_init(&phi->lf, NULL);
-}
-
-void	init_philos(t_common all)
+void	init_philos(t_common *all)
 {
 	t_philo	**phi;
 	int		i;
 
-	phi = malloc(all.n_philo * sizeof(t_philo *));
-	all.dead = 0;
-	pthread_mutex_init(&all.write_mutex, NULL);
+	phi = malloc(all->n_philo * sizeof(t_philo *));
 	i = -1;
-	while (++i < all.n_philo)
+	while (++i < all->n_philo)
 	{
 		phi[i] = malloc(sizeof(t_philo));
-		phi[i]->all = &all;
+		phi[i]->all = all;
 		phi[i]->i = i;
 		phi[i]->eating = 0;
 		pthread_mutex_init(&phi[i]->lf, NULL);
-		//set_philo(&phi[i], &all, i);
 	}
 	i = -1;
-	while (++i < all.n_philo)
+	while (++i < all->n_philo)
 	{
-		if (i == all.n_philo - 1)
+		if (i == all->n_philo - 1)
 			phi[i]->rf = &phi[0]->lf;
 		else
 			phi[i]->rf = &phi[i + 1]->lf;
 	}
-	all.start = get_time();
+	all->start = get_time();
 	i = -1;
-	while (++i < all.n_philo)
+	while (++i < all->n_philo)
+		phi[i]->last_eat = all->start;
+	i = -1;
+	while (++i < all->n_philo)
 		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
 	i = -1;
-	while (++i < all.n_philo)
+	while (++i < all->n_philo)
 		pthread_join(phi[i]->brain, NULL);
 }
 
@@ -114,5 +108,8 @@ int	main(int ac, char **av)
 	all.t_sleep = ft_atol(av[4]);
 	if (ac == 6)
 		all.n_eat = ft_atol(av[5]);
-	init_philos(all);
+	all.dead = 0;
+	pthread_mutex_init(&all.write_mutex, NULL);
+	pthread_mutex_init(&all.death_mutex, NULL);
+	init_philos(&all);
 }
