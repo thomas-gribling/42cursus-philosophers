@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/12 10:54:12 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:18:50 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define MSG_FORK "|% 6lu % 4d      has taken a fork|\n"
-# define MSG_EAT "|% 6lu % 4d             is eating|\n"
-# define MSG_SLEEP "|% 6lu % 4d           is sleeping|\n"
-# define MSG_THINK "|% 6lu % 4d           is thinking|\n"
-# define MSG_DIE "|% 6lu % 4d                  died|\n"
+# define MSG_FORK "|% 6lu % 4d      has taken a fork🍴|\n"
+# define MSG_EAT "|% 6lu % 4d             is eating🍝|\n"
+# define MSG_SLEEP "|% 6lu % 4d           is sleeping😴|\n"
+# define MSG_THINK "|% 6lu % 4d           is thinking🧠|\n"
+# define MSG_DIE "|% 6lu % 4d                  died💀|\n"
 
 typedef struct s_common
 {

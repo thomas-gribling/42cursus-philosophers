@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/12 10:51:08 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:19:54 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,17 @@ int	main(int ac, char **av)
 	if (check_args(ac, av, &all))
 		return (1);
 	all.dead = 0;
+	printf(" ___________________________________\n");
+	printf("|__TIME___ID______ACTION____________|\n");
 	if (all.n_philo == 1)
 	{
 		put_msg_quick(MSG_FORK, 0, 0);
 		ft_usleep(all.t_die);
-		return (put_msg_quick(MSG_DIE, all.t_die, 0), 0);
+		put_msg_quick(MSG_DIE, all.t_die, 0);
+		return (printf("|___________________________________|\n"), 0);
 	}
 	pthread_mutex_init(&all.write_mutex, NULL);
 	pthread_mutex_init(&all.death_mutex, NULL);
 	init_philos(&all);
-	return (0);
+	return (printf("|___________________________________|\n"), 0);
 }
