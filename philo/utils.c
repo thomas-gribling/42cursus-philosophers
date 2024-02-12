@@ -6,38 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 09:58:38 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:55:02 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	put_message(char *msg, t_philo *phi)
-{
-	if (phi->all->dead && ft_strcmp(msg, MSG_DIE))
-		return ;
-	pthread_mutex_lock(&phi->all->write_mutex);
-	printf(msg, get_time() - phi->all->start, phi->i);
-	pthread_mutex_unlock(&phi->all->write_mutex);
-}
-
-unsigned int	get_time(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		return (0);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-void	ft_usleep(long ms)
-{
-	unsigned int	start;
-
-	start = get_time();
-	while (get_time() - start < ms)
-		usleep(ms / 10);
-}
 
 long	ft_atol(char *s)
 {
@@ -75,4 +48,32 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+int	is_num(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+	return (1);
+}
+
+int	ft_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

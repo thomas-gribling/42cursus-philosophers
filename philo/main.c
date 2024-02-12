@@ -6,88 +6,72 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/09 10:17:36 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:51:08 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	die(t_philo *phi)
+int	ft_puterror(char *s, int format)
 {
-	pthread_mutex_lock(&phi->all->death_mutex);
-	phi->all->dead = 1;
-	put_message(MSG_DIE, phi);
-	pthread_mutex_unlock(&phi->all->death_mutex);
+	int	i;
+
+	i = -1;
+	if (format)
+		write(2, "Error: ", 7);
+	while (s[++i])
+		write(2, &s[i], 1);
+	if (format)
+		write(2, "\n", 1);
+	return (1);
 }
 
-void	*check_death(void *arg)
+int	put_errors(t_common *all, int ac)
 {
-	t_philo	*phi;
-
-	phi = (t_philo *)arg;
-	while (!phi->all->dead)
-		if (!phi->eating)
-			if (get_time() - phi->last_eat >= phi->all->t_die)
-				die(phi);
-	return (NULL);
+	if (all->n_philo <= 0 || all->n_philo > 200)
+		return (ft_puterror("Invalid philos amount. (1 - 200)", 1));
+	if (all->t_die < 60 || all->t_eat < 60 || all->t_sleep < 60)
+		return (ft_puterror("All times must be at least 60ms.", 1));
+	if (ac == 6 && all->n_eat < 1)
+		return (ft_puterror("The amount of meals must be at leat 1.", 1));
+	return (0);
 }
 
-void	*routine(void *arg)
+int	check_max_int(char *s)
 {
-	t_philo			*phi;
-	pthread_t		death_check;
-
-	phi = (t_philo *)arg;
-	if (phi->i % 2)
-		ft_usleep(phi->all->t_eat / 10);
-	pthread_create(&death_check, NULL, check_death, phi);
-	while (!phi->all->dead)
-	{
-		philo_start_eating(phi);
-		ft_usleep(phi->all->t_eat);
-		phi->last_eat = get_time();
-		philo_start_sleeping(phi);
-		ft_usleep(phi->all->t_sleep);
-		if (phi->all->dead)
-			return (NULL);
-		put_message(MSG_THINK, phi);
-	}
-	return (NULL);
+	if (ft_strlen(s) > 10)
+		return (1);
+	if (ft_strlen(s) < 10)
+		return (0);
+	if (s[0] >= '2' && s[1] >= '1' && s[2] >= '4')
+		if (s[3] >= '7' && s[4] >= '4' && s[5] >= '8')
+			if (s[6] >= '3' && s[7] >= '6' && s[8] >= '4')
+				if (s[9] > '7')
+					return (1);
+	return (0);
 }
 
-void	init_philos(t_common *all)
+int	check_args(int ac, char **av, t_common *all)
 {
-	t_philo	**phi;
-	int		i;
+	int	i;
 
-	phi = malloc(all->n_philo * sizeof(t_philo *));
-	i = -1;
-	while (++i < all->n_philo)
+	i = 0;
+	while (++i < ac)
 	{
-		phi[i] = malloc(sizeof(t_philo));
-		phi[i]->all = all;
-		phi[i]->i = i;
-		phi[i]->eating = 0;
-		pthread_mutex_init(&phi[i]->lf, NULL);
+		if (!is_num(av[i]))
+			return (ft_puterror("Invalid characters.", 1), 1);
+		if (check_max_int(av[i]))
+			return (ft_puterror("Value beyond max int.", 1), 1);
 	}
-	i = -1;
-	while (++i < all->n_philo)
-	{
-		if (i == all->n_philo - 1)
-			phi[i]->rf = &phi[0]->lf;
-		else
-			phi[i]->rf = &phi[i + 1]->lf;
-	}
-	all->start = get_time();
-	i = -1;
-	while (++i < all->n_philo)
-		phi[i]->last_eat = all->start;
-	i = -1;
-	while (++i < all->n_philo)
-		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
-	i = -1;
-	while (++i < all->n_philo)
-		pthread_join(phi[i]->brain, NULL);
+	all->n_philo = ft_atol(av[1]);
+	all->t_die = ft_atol(av[2]);
+	all->t_eat = ft_atol(av[3]);
+	all->t_sleep = ft_atol(av[4]);
+	if (ac == 6)
+		all->n_eat = ft_atol(av[5]);
+	else
+		all->n_eat = -1;
+	return (put_errors(all, ac));
 }
 
 int	main(int ac, char **av)
@@ -95,15 +79,23 @@ int	main(int ac, char **av)
 	t_common	all;
 
 	if (ac < 5 || ac > 6)
+	{
+		ft_puterror("Arguments:\n- number_of_philos\n- time_to_die\n", 0);
+		ft_puterror("- time_to_eat\n- time_to_sleep\n", 0);
+		ft_puterror("- number_of_meals (optional)\n", 0);
 		return (1);
-	all.n_philo = ft_atol(av[1]);
-	all.t_die = ft_atol(av[2]);
-	all.t_eat = ft_atol(av[3]);
-	all.t_sleep = ft_atol(av[4]);
-	if (ac == 6)
-		all.n_eat = ft_atol(av[5]);
+	}
+	if (check_args(ac, av, &all))
+		return (1);
 	all.dead = 0;
+	if (all.n_philo == 1)
+	{
+		put_msg_quick(MSG_FORK, 0, 0);
+		ft_usleep(all.t_die);
+		return (put_msg_quick(MSG_DIE, all.t_die, 0), 0);
+	}
 	pthread_mutex_init(&all.write_mutex, NULL);
 	pthread_mutex_init(&all.death_mutex, NULL);
 	init_philos(&all);
+	return (0);
 }
