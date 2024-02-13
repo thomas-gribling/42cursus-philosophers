@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/12 16:14:48 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:00:53 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*check_death(void *arg)
 {
 	t_philo	*phi;
 
+	if (!arg)
+		return (NULL);
 	phi = (t_philo *)arg;
 	while (!phi->all->dead)
 		if (!phi->eating)
@@ -43,20 +45,32 @@ void	*routine(void *arg)
 	pthread_create(&death_check, NULL, check_death, phi);
 	while (!phi->all->dead)
 	{
-		if (phi->all->dead)
-			return (NULL);
 		if (philo_start_eating(phi))
-			return (NULL);
+			break;
 		ft_usleep(phi->all->t_eat);
 		phi->last_eat = get_time();
 		if (philo_start_sleeping(phi))
-			return (NULL);
+			break;
 		ft_usleep(ft_min(phi->all->t_die, phi->all->t_sleep));
 		if (phi->all->dead)
-			return (NULL);
+			break;
 		put_message(MSG_THINK, phi);
 	}
+	pthread_detach(death_check);
 	return (NULL);
+}
+
+void	init_threads(t_philo **phi, t_common *all)
+{
+	int			i;
+
+	all->start = get_time();
+	i = -1;
+	while (++i < all->n_philo)
+		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
+	i = -1;
+	while (++i < all->n_philo)
+		pthread_join(phi[i]->brain, NULL);
 }
 
 void	init_philos(t_common *all)
@@ -83,11 +97,5 @@ void	init_philos(t_common *all)
 		else
 			phi[i]->rf = &phi[i + 1]->lf;
 	}
-	all->start = get_time();
-	i = -1;
-	while (++i < all->n_philo)
-		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
-	i = -1;
-	while (++i < all->n_philo)
-		pthread_join(phi[i]->brain, NULL);
+	init_threads(phi, all);
 }
