@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 10:06:21 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 10:11:49 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:31:41 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 void	philo_eat(t_philo *phi)
 {
-	pthread_mutex_lock(&phi->lf);
-	put_message(MSG_FORK, phi);
-	pthread_mutex_lock(phi->rf);
+	if (phi->i % 2)
+	{
+		pthread_mutex_lock(&phi->lf);
+		put_message(MSG_FORK, phi);
+		pthread_mutex_lock(phi->rf);
+	}
+	else
+	{
+		pthread_mutex_lock(phi->rf);
+		put_message(MSG_FORK, phi);
+		pthread_mutex_lock(&phi->lf);
+	}
 	put_message(MSG_FORK, phi);
 	put_message(MSG_EAT, phi);
 	phi->eating = 1;

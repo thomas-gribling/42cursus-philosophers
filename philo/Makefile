@@ -4,7 +4,7 @@ SRCS = ./
 INCLUDE = ./
 
 CC = gcc
-CFLAGS = -pthread#-Wall -Wextra -Werror -pthread
+CFLAGS = -g -pthread#-Wall -Wextra -Werror -g -pthread
 
 FILES = main.c routine.c states.c utils.c utils_philo.c
 OBJECTS = $(addprefix $(SRCS), $(FILES:.c=.o))
