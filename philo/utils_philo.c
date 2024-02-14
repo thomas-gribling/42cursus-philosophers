@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/12 10:55:08 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:07:58 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,17 @@ void	ft_usleep(long ms)
 
 	start = get_time();
 	while (get_time() - start < ms)
-		usleep(ms / 10);
+		usleep(50);
+}
+
+void	free_philos(t_philo **phi)
+{
+	int	i;
+	int	maxi;
+
+	maxi = phi[0]->all->n_philo;
+	i = -1;
+	while (++i < maxi)
+		free(phi[i]);
+	free(phi);
 }
