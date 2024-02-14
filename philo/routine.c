@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 09:08:07 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:09:18 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	die(t_philo *phi)
 {
 	pthread_mutex_lock(&phi->all->death_mutex);
-	phi->all->dead = 1;
+	phi->all->dead++;
 	put_message(MSG_DIE, phi);
+	pthread_mutex_unlock(&phi->all->death_mutex);
 }
 
 void	*check_death(void *arg)
@@ -36,13 +37,12 @@ void	*check_death(void *arg)
 void	*routine(void *arg)
 {
 	t_philo			*phi;
-	pthread_t		death_check;
 
 	phi = (t_philo *)arg;
 	phi->last_eat = phi->all->start;
 	if (phi->i % 2)
 		ft_usleep(ft_min(phi->all->t_die, phi->all->t_eat));
-	pthread_create(&death_check, NULL, check_death, phi);
+	pthread_create(&phi->death_check, NULL, check_death, phi);
 	while (!phi->all->dead)
 	{
 		philo_eat(phi);
@@ -52,7 +52,7 @@ void	*routine(void *arg)
 		ft_usleep(phi->all->t_sleep);
 		put_message(MSG_THINK, phi);
 	}
-	pthread_detach(death_check);
+	pthread_detach(phi->death_check);
 	return (NULL);
 }
 

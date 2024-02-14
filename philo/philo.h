@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 09:07:52 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/14 09:57:07 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_philo
 	unsigned int	last_eat;
 	unsigned int	meals_left;
 	pthread_t		brain;
+	pthread_t		death_check;
 	pthread_mutex_t	lf;
 	pthread_mutex_t	*rf;
 	t_common		*all;
