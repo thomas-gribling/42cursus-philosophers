@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 08:37:27 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:00:22 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	die(t_philo *phi)
 {
-	if (phi->all->dead)
-		return ;
 	pthread_mutex_lock(&phi->all->death_mutex);
-	phi->all->dead++;
-	put_message(MSG_DIE, phi);
+	if (!phi->all->dead)
+	{
+		phi->all->dead++;
+		put_message(MSG_DIE, phi);
+	}
 	pthread_mutex_unlock(&phi->all->death_mutex);
 }
 
@@ -30,8 +31,6 @@ void	*check_death(void *arg)
 		return (NULL);
 	phi = (t_philo *)arg;
 	ft_usleep(phi->all->t_die + 1);
-	if (phi->eating)
-		return (NULL);
 	if (get_time() - phi->last_eat >= phi->all->t_die)
 		die(phi);
 	return (NULL);
@@ -47,12 +46,12 @@ void	*routine(void *arg)
 		ft_usleep(ft_min(phi->all->t_die, phi->all->t_eat));
 	while (!phi->all->dead)
 	{
+		pthread_create(&phi->death_check, NULL, check_death, phi);
 		philo_eat(phi);
 		if (!phi->meals_left)
-			break;
-		pthread_create(&phi->death_check, NULL, check_death, phi);
+			break ;
 		put_message(MSG_SLEEP, phi);
-		ft_usleep(phi->all->t_sleep);
+		ft_usleep(ft_min(phi->all->t_die, phi->all->t_sleep));
 		put_message(MSG_THINK, phi);
 		pthread_detach(phi->death_check);
 	}
@@ -96,6 +95,8 @@ void	init_philos(t_common *all)
 		phi[i]->meals_left = all->n_eat;
 	}
 	phi[i] = NULL;
+	pthread_mutex_init(&all->write_mutex, NULL);
+	pthread_mutex_init(&all->death_mutex, NULL);
 	i = -1;
 	while (++i)
 		pthread_mutex_init(&phi[i]->lf, NULL);

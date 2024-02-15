@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 08:35:45 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 09:52:22 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ int	main(int ac, char **av)
 		put_msg_quick(MSG_DIE, all.t_die, 0);
 		return (printf("|___________________________________|\n"), 0);
 	}
-	pthread_mutex_init(&all.write_mutex, NULL);
-	pthread_mutex_init(&all.death_mutex, NULL);
 	init_philos(&all);
 	return (printf("|___________________________________|\n"), 0);
 }
