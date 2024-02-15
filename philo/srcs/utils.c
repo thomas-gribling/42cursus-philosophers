@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/12 10:55:02 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:35:58 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 long	ft_atol(char *s)
 {

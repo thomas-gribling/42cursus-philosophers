@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 15:10:58 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:35:53 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	put_message(char *msg, t_philo *phi)
 {

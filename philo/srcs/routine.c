@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 15:27:44 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:37:27 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	die(t_philo *phi)
 {
@@ -64,19 +64,19 @@ void	init_threads(t_philo **phi, t_common *all)
 	int			i;
 
 	i = -1;
-	while (++i < all->n_philo)
+	while (++i < (int)all->n_philo)
 	{
-		if (i == all->n_philo - 1)
+		if (i == (int)all->n_philo - 1)
 			phi[i]->rf = &phi[0]->lf;
 		else
 			phi[i]->rf = &phi[i + 1]->lf;
 	}
 	all->start = get_time();
 	i = -1;
-	while (++i < all->n_philo)
+	while (++i < (int)all->n_philo)
 		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
 	i = -1;
-	while (++i < all->n_philo)
+	while (++i < (int)all->n_philo)
 		pthread_join(phi[i]->brain, NULL);
 }
 
@@ -87,7 +87,7 @@ void	init_philos(t_common *all)
 
 	phi = malloc((all->n_philo + 1) * sizeof(t_philo *));
 	i = -1;
-	while (++i < all->n_philo)
+	while (++i < (int)all->n_philo)
 	{
 		phi[i] = malloc(sizeof(t_philo));
 		phi[i]->all = all;

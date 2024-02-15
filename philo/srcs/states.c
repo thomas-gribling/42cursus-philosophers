@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 10:06:21 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 15:31:41 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/15 08:35:28 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	philo_eat(t_philo *phi)
 {

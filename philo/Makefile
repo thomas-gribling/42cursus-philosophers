@@ -1,10 +1,10 @@
 NAME = philo
 
-SRCS = ./
-INCLUDE = ./
+SRCS = srcs/
+INCLUDE = include/
 
 CC = gcc
-CFLAGS = -g -pthread#-Wall -Wextra -Werror -g -pthread
+CFLAGS = -Wall -Wextra -Werror -g -pthread
 
 FILES = main.c routine.c states.c utils.c utils_philo.c
 OBJECTS = $(addprefix $(SRCS), $(FILES:.c=.o))
