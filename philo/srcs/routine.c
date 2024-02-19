@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/19 09:58:36 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:23:13 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	init_philos(t_common *all)
 		phi[i] = malloc(sizeof(t_philo));
 		phi[i]->all = all;
 		phi[i]->i = i;
-		phi[i]->eating = 0;
 		phi[i]->meals_left = all->n_eat;
 		pthread_mutex_init(&phi[i]->lf, NULL);
 	}
