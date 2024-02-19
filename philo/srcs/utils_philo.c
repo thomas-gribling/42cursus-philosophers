@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:06:16 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:03:44 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	put_message(char *msg, t_philo *phi)
 {
-	if (phi->all->dead && ft_strcmp(msg, MSG_DIE))
-		return ;
 	pthread_mutex_lock(&phi->all->write_mutex);
-	printf(msg, get_time() - phi->all->start, phi->i + 1);
+	if (!(phi->all->dead && ft_strcmp(msg, MSG_DIE)))
+	{
+		ft_putstr("|");
+		ft_putnbr(get_time() - phi->all->start, 6);
+		ft_putstr(" ");
+		ft_putnbr(phi->i + 1, 4);
+		ft_putstr(msg);
+	}
 	pthread_mutex_unlock(&phi->all->write_mutex);
 }
 
@@ -41,7 +46,7 @@ void	ft_usleep(long ms)
 
 	start = get_time();
 	while (get_time() - start < ms)
-		usleep(50);
+		usleep(ms / 10);
 }
 
 void	free_philos(t_philo **phi)

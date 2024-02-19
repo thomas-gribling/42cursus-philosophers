@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 08:35:58 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:02:04 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,46 @@ int	ft_strlen(char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		ft_putchar(s[i]);
+}
+
+size_t	unsigned_len(unsigned int n)
+{
+	size_t	len;
+	
+	len = 1;
+	while (n > 9)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+void	ft_putnbr(unsigned int n, size_t len)
+{
+	size_t	n_len;
+
+	n_len = unsigned_len(n);
+	while (len > n_len)
+	{
+		ft_putchar(' ');
+		len--;
+	}
+	if (n > 9)
+		ft_putnbr(n / 10, 0);
+	ft_putchar(n % 10 + '0');
 }

@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 10:06:21 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 14:31:49 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:58:52 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	philo_eat(t_philo *phi)
 	if (phi->meals_left > 0)
 		phi->meals_left--;
 	ft_usleep(phi->all->t_eat);
+	phi->eating = 0;
 	pthread_mutex_unlock(phi->rf);
 	pthread_mutex_unlock(&phi->lf);
-	phi->eating = 0;
 }

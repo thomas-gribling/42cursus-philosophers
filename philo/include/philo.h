@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/14 09:57:07 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:59:11 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define MSG_FORK "|% 6lu % 4d      has taken a fork🍴|\n"
-# define MSG_EAT "|% 6lu % 4d             is eating🍝|\n"
-# define MSG_SLEEP "|% 6lu % 4d           is sleeping😴|\n"
-# define MSG_THINK "|% 6lu % 4d           is thinking🧠|\n"
-# define MSG_DIE "|% 6lu % 4d                  died💀|\n"
+# define MSG_FORK "      has taken a fork🍴|\n"
+# define MSG_EAT "             is eating🍝|\n"
+# define MSG_SLEEP "           is sleeping😴|\n"
+# define MSG_THINK "           is thinking🧠|\n"
+# define MSG_DIE "                  died💀|\n"
 
 typedef struct s_common
 {
@@ -65,5 +65,7 @@ int				ft_strcmp(char *s1, char *s2);
 int				ft_min(int a, int b);
 int				is_num(char *s);
 int				ft_strlen(char *s);
+void			ft_putstr(char *s);
+void			ft_putnbr(unsigned int n, size_t len);
 
 #endif
