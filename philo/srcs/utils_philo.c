@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:27:58 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/20 08:44:58 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	put_message(char *msg, t_philo *phi)
 
 void	put_msg_quick(char *msg, unsigned int time, int i)
 {
-	printf(msg, time, i + 1);
+	ft_putstr("|");
+	ft_putnbr(time, 6);
+	ft_putstr(" ");
+	ft_putnbr(i + 1, 4);
+	ft_putstr(msg);
 }
 
 unsigned int	get_time(void)
