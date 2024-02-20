@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/19 15:29:48 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:03:01 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*check_death(void *arg)
 
 void	*routine(void *arg)
 {
-	t_philo			*phi;
+	t_philo	*phi;
 
 	phi = (t_philo *)arg;
 	phi->last_eat = phi->all->start;
@@ -63,7 +63,7 @@ void	*routine(void *arg)
 
 void	init_threads(t_philo **phi, t_common *all)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	while (++i < (int)all->n_philo)
