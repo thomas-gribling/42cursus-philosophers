@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/20 08:44:58 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:31:26 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,13 @@ void	put_message(char *msg, t_philo *phi)
 {
 	pthread_mutex_lock(&phi->all->write_mutex);
 	if (!(phi->all->dead && ft_strcmp(msg, MSG_DIE)))
-	{
-		ft_putstr("|");
-		ft_putnbr(get_time() - phi->all->start, 6);
-		ft_putstr(" ");
-		ft_putnbr(phi->i + 1, 4);
-		ft_putstr(msg);
-	}
+		printf(msg, get_time() - phi->all->start, phi->i + 1);
 	pthread_mutex_unlock(&phi->all->write_mutex);
 }
 
 void	put_msg_quick(char *msg, unsigned int time, int i)
 {
-	ft_putstr("|");
-	ft_putnbr(time, 6);
-	ft_putstr(" ");
-	ft_putnbr(i + 1, 4);
-	ft_putstr(msg);
+	printf(msg, time, i + 1);
 }
 
 unsigned int	get_time(void)
