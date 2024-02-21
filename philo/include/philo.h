@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/20 14:33:03 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/21 09:54:26 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			philo_eat(t_philo *phi);
 void			put_message(char *msg, t_philo *phi);
 void			put_msg_quick(char *msg, unsigned int time, int i);
 unsigned int	get_time(void);
-void			ft_usleep(long ms);
+void			ft_usleep(unsigned int ms);
 void			free_philos(t_philo **phi);
 
 long			ft_atol(char *s);

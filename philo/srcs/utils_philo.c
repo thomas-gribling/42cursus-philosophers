@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/20 15:03:50 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/21 10:41:37 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ unsigned int	get_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	ft_usleep(long ms)
+void	ft_usleep(unsigned int ms)
 {
 	unsigned int	start;
 
