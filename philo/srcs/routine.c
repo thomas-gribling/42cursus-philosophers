@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 08:36:10 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:04:12 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*check_death(void *arg)
 	phi = (t_philo *)arg;
 	ft_usleep(phi->all->t_die + 1);
 	pthread_mutex_lock(&phi->eat_mutex);
-	if (get_time() - phi->last_eat >= phi->all->t_die) // last_eat = data race
+	if (get_time() - phi->last_eat >= phi->all->t_die)
 		die(phi);
 	pthread_mutex_unlock(&phi->eat_mutex);
 	return (NULL);
@@ -77,10 +77,7 @@ void	init_threads(t_philo **phi, t_common *all)
 	}
 	i = -1;
 	while (++i < (int)all->n_philo)
-	{
 		pthread_join(phi[i]->brain, NULL);
-		//pthread_detach(phi[i]->brain);
-	}
 }
 
 void	init_philos(t_common *all)

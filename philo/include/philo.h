@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 08:32:49 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:43:54 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_common
 	long			n_eat;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	death_mutex;
-	unsigned int	start;
 	int				dead;
 }					t_common;
 

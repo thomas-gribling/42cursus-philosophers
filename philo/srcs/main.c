@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/15 09:52:22 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:13 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	main(int ac, char **av)
 		put_msg_quick(MSG_FORK, 0, 0);
 		ft_usleep(all.t_die);
 		put_msg_quick(MSG_DIE, all.t_die, 0);
-		return (printf("|___________________________________|\n"), 0);
 	}
-	init_philos(&all);
+	else
+		init_philos(&all);
 	return (printf("|___________________________________|\n"), 0);
 }
