@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/20 15:03:01 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/22 08:36:10 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	*routine(void *arg)
 	t_philo	*phi;
 
 	phi = (t_philo *)arg;
-	phi->last_eat = phi->all->start;
+	phi->last_eat = phi->start;
 	if (phi->i % 2)
-		ft_usleep(ft_min(phi->all->t_die, phi->all->t_eat));
+		ft_usleep(phi->all->t_eat);
 	while (!phi->all->dead)
 	{
 		pthread_create(&phi->death_check, NULL, check_death, phi);
@@ -72,11 +72,9 @@ void	init_threads(t_philo **phi, t_common *all)
 			phi[i]->rf = &phi[0]->lf;
 		else
 			phi[i]->rf = &phi[i + 1]->lf;
-	}
-	all->start = get_time();
-	i = -1;
-	while (++i < (int)all->n_philo)
+		phi[i]->start = get_time();
 		pthread_create(&phi[i]->brain, NULL, routine, phi[i]);
+	}
 	i = -1;
 	while (++i < (int)all->n_philo)
 	{
