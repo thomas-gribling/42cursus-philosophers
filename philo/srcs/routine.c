@@ -6,20 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 08:45:00 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:22:21 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-static void	die(t_philo *phi)
-{
-	pthread_mutex_lock(&phi->all->death_mutex);
-	if (!phi->all->dead)
-		put_message(MSG_DIE, phi);
-	phi->all->dead = 1; //data_race
-	pthread_mutex_unlock(&phi->all->death_mutex);
-}
 
 static void	*check_death(void *arg)
 {
@@ -31,7 +22,19 @@ static void	*check_death(void *arg)
 	ft_usleep(phi->all->t_die + 1);
 	pthread_mutex_lock(&phi->eat_mutex);
 	if (get_time() - phi->last_eat >= phi->all->t_die)
-		die(phi);
+	{
+		pthread_mutex_lock(&phi->all->death_mutex);
+		pthread_mutex_lock(&phi->kill_mutex);
+		if (!phi->all->dead)
+		{
+			pthread_mutex_unlock(&phi->kill_mutex);
+			put_message(MSG_DIE, phi);
+			pthread_mutex_lock(&phi->kill_mutex);
+		}
+		phi->all->dead = 1; //data_race
+		pthread_mutex_unlock(&phi->kill_mutex);
+		pthread_mutex_unlock(&phi->all->death_mutex);
+	}
 	pthread_mutex_unlock(&phi->eat_mutex);
 	return (NULL);
 }
@@ -75,10 +78,7 @@ void	*routine(void *arg)
 		pthread_create(&phi->death_check, NULL, check_death, phi);
 		philo_eat(phi);
 		if (!phi->meals_left)
-		{
-			pthread_detach(phi->death_check);
-			break ;
-		}
+			return (pthread_detach(phi->death_check), NULL);
 		put_message(MSG_SLEEP, phi);
 		ft_usleep(phi->all->t_sleep);
 		put_message(MSG_THINK, phi);

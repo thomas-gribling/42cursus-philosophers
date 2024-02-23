@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 08:41:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 08:42:20 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 08:53:51 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_philos(t_common *all)
 		phi[i]->i = i;
 		phi[i]->meals_left = all->n_eat;
 		pthread_mutex_init(&phi[i]->eat_mutex, NULL);
+		pthread_mutex_init(&phi[i]->kill_mutex, NULL);
 		pthread_mutex_init(&phi[i]->lf, NULL);
 	}
 	phi[i] = NULL;

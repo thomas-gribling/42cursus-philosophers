@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 08:42:48 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 08:52:32 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 	pthread_t		brain;
 	pthread_t		death_check;
 	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	kill_mutex;
 	pthread_mutex_t	lf;
 	pthread_mutex_t	*rf;
 	t_common		*all;
@@ -53,7 +54,6 @@ typedef struct s_philo
 
 void			init_philos(t_common *all);
 void			*routine(void *arg);
-//void			philo_eat(t_philo *phi);
 
 void			put_message(char *msg, t_philo *phi);
 void			put_msg_quick(char *msg, unsigned int time, int i);

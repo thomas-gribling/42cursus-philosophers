@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:54:39 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 08:48:19 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:18:20 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	put_message(char *msg, t_philo *phi)
 {
+	pthread_mutex_lock(&phi->kill_mutex);
 	if (phi->all->dead)
+	{
+		pthread_mutex_unlock(&phi->kill_mutex);
 		return ;
+	}
 	pthread_mutex_lock(&phi->all->write_mutex);
 	if (!phi->all->dead)
 		printf(msg, get_time() - phi->start, phi->i + 1);
 	pthread_mutex_unlock(&phi->all->write_mutex);
+	pthread_mutex_unlock(&phi->kill_mutex);
 }
 
 void	put_msg_quick(char *msg, unsigned int time, int i)
