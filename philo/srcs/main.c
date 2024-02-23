@@ -6,27 +6,13 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:22:14 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 15:46:13 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 08:41:06 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	ft_puterror(char *s, int format)
-{
-	int	i;
-
-	i = -1;
-	if (format)
-		write(2, "Error: ", 7);
-	while (s[++i])
-		write(2, &s[i], 1);
-	if (format)
-		write(2, "\n", 1);
-	return (1);
-}
-
-int	put_errors(t_common *all, int ac)
+static int	put_errors(t_common *all, int ac)
 {
 	if (all->n_philo <= 0 || all->n_philo > 200)
 		return (ft_puterror("Invalid philos amount. (1 - 200)", 1));
@@ -37,7 +23,18 @@ int	put_errors(t_common *all, int ac)
 	return (0);
 }
 
-int	check_max_int(char *s)
+static int	is_num(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+	return (1);
+}
+
+static int	check_max_int(char *s)
 {
 	if (ft_strlen(s) > 10)
 		return (1);
@@ -51,7 +48,7 @@ int	check_max_int(char *s)
 	return (0);
 }
 
-int	check_args(int ac, char **av, t_common *all)
+static int	check_args(int ac, char **av, t_common *all)
 {
 	int	i;
 

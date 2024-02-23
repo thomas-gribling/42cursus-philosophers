@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 09:37:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 08:41:37 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 08:37:31 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,6 @@ int	ft_min(int a, int b)
 	return (b);
 }
 
-int	is_num(char *s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-		if (s[i] < '0' || s[i] > '9')
-			return (0);
-	return (1);
-}
-
 int	ft_strlen(char *s)
 {
 	int	i;
@@ -76,4 +65,18 @@ int	ft_strlen(char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+int	ft_puterror(char *s, int format)
+{
+	int	i;
+
+	i = -1;
+	if (format)
+		write(2, "Error: ", 7);
+	while (s[++i])
+		write(2, &s[i], 1);
+	if (format)
+		write(2, "\n", 1);
+	return (1);
 }

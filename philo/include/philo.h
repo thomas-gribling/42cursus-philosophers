@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/22 15:43:54 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 08:42:48 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef struct s_philo
 }					t_philo;
 
 void			init_philos(t_common *all);
-void			philo_eat(t_philo *phi);
+void			*routine(void *arg);
+//void			philo_eat(t_philo *phi);
 
 void			put_message(char *msg, t_philo *phi);
 void			put_msg_quick(char *msg, unsigned int time, int i);
@@ -63,7 +64,7 @@ void			free_philos(t_philo **phi);
 long			ft_atol(char *s);
 int				ft_strcmp(char *s1, char *s2);
 int				ft_min(int a, int b);
-int				is_num(char *s);
 int				ft_strlen(char *s);
+int				ft_puterror(char *s, int format);
 
 #endif
