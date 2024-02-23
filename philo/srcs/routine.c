@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 09:22:21 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/02/23 09:33:08 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	*check_death(void *arg)
 			put_message(MSG_DIE, phi);
 			pthread_mutex_lock(&phi->kill_mutex);
 		}
-		phi->all->dead = 1; //data_race
+		phi->all->dead = 1;
 		pthread_mutex_unlock(&phi->kill_mutex);
 		pthread_mutex_unlock(&phi->all->death_mutex);
 	}
