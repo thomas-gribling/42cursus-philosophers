@@ -6,11 +6,26 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/03/04 09:56:31 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:43:07 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+static void	ft_usleep_stop(unsigned int ms, t_philo *phi)
+{
+	unsigned int	start;
+
+	start = get_time();
+	pthread_mutex_lock(&phi->eat_mutex);
+	while (get_time() - start < ms && !phi->stop)
+	{
+		pthread_mutex_unlock(&phi->eat_mutex);
+		usleep(ms / 10);
+		pthread_mutex_lock(&phi->eat_mutex);
+	}
+	pthread_mutex_unlock(&phi->eat_mutex);
+}
 
 static void	*check_death(void *arg)
 {
@@ -19,7 +34,7 @@ static void	*check_death(void *arg)
 	if (!arg)
 		return (NULL);
 	phi = (t_philo *)arg;
-	ft_usleep(phi->all->t_die + 1);
+	ft_usleep_stop(phi->all->t_die + 1, phi);
 	pthread_mutex_lock(&phi->eat_mutex);
 	if (get_time() - phi->last_eat >= phi->all->t_die && !phi->stop)
 	{
