@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 08:52:32 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/03/04 08:44:40 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_common
 	long			n_eat;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	kill_mutex;
 	int				dead;
 }					t_common;
 
@@ -46,7 +47,6 @@ typedef struct s_philo
 	pthread_t		brain;
 	pthread_t		death_check;
 	pthread_mutex_t	eat_mutex;
-	pthread_mutex_t	kill_mutex;
 	pthread_mutex_t	lf;
 	pthread_mutex_t	*rf;
 	t_common		*all;

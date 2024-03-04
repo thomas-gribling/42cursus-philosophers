@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:06:36 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 09:33:08 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/03/04 08:51:17 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	*check_death(void *arg)
 	if (get_time() - phi->last_eat >= phi->all->t_die)
 	{
 		pthread_mutex_lock(&phi->all->death_mutex);
-		pthread_mutex_lock(&phi->kill_mutex);
+		pthread_mutex_lock(&phi->all->kill_mutex);
 		if (!phi->all->dead)
 		{
-			pthread_mutex_unlock(&phi->kill_mutex);
+			pthread_mutex_unlock(&phi->all->kill_mutex);
 			put_message(MSG_DIE, phi);
-			pthread_mutex_lock(&phi->kill_mutex);
+			pthread_mutex_lock(&phi->all->kill_mutex);
 		}
 		phi->all->dead = 1;
-		pthread_mutex_unlock(&phi->kill_mutex);
+		pthread_mutex_unlock(&phi->all->kill_mutex);
 		pthread_mutex_unlock(&phi->all->death_mutex);
 	}
 	pthread_mutex_unlock(&phi->eat_mutex);
@@ -75,7 +75,7 @@ void	*routine(void *arg)
 		ft_usleep(phi->all->t_eat);
 	while (!phi->all->dead)
 	{
-		pthread_create(&phi->death_check, NULL, check_death, phi);
+		pthread_create(&phi->death_check, NULL, check_death, phi); // 2 blocks lost per thread
 		philo_eat(phi);
 		if (!phi->meals_left)
 			return (pthread_detach(phi->death_check), NULL);

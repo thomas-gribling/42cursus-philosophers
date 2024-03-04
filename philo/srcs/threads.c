@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 08:41:42 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/02/23 08:53:51 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/03/04 08:44:25 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	init_philos(t_common *all)
 	phi = malloc((all->n_philo + 1) * sizeof(t_philo *));
 	pthread_mutex_init(&all->write_mutex, NULL);
 	pthread_mutex_init(&all->death_mutex, NULL);
+	pthread_mutex_init(&all->kill_mutex, NULL);
 	i = -1;
 	while (++i < (int)all->n_philo)
 	{
@@ -47,7 +48,6 @@ void	init_philos(t_common *all)
 		phi[i]->i = i;
 		phi[i]->meals_left = all->n_eat;
 		pthread_mutex_init(&phi[i]->eat_mutex, NULL);
-		pthread_mutex_init(&phi[i]->kill_mutex, NULL);
 		pthread_mutex_init(&phi[i]->lf, NULL);
 	}
 	phi[i] = NULL;
