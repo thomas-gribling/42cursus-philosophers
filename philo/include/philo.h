@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:15:48 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/03/04 08:44:40 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/03/04 09:44:07 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_common
 typedef struct s_philo
 {
 	int				i;
+	int				stop;
 	unsigned int	start;
 	unsigned int	last_eat;
 	unsigned int	meals_left;
